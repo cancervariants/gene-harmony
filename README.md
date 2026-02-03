@@ -6,7 +6,22 @@
 [![Actions status](https://github.com/cancervariants/gene-harmony/actions/workflows/checks.yaml/badge.svg)](https://github.com/cancervariants/gene-harmony/actions/checks.yaml)
 
 <!-- description -->
-Resource for harmonizing ambiguous gene symbols
+This resource is useful for harmonizing ambiguous gene symbols powered by thousands of annotations characterizing the relationships between genes and their symbols.
+
+Given a gene symbol, this package:
+- finds all genes with this symbol as an alias or primary gene symbol
+- provides relationships between the gene symbols and their genes, when available
+- provides more detailed information when given the relationship type with the gene symbol
+
+Resources used for annotations include:
+[Ensembl](https://www.ensembl.org/index.html)
+[HGNC](https://www.genenames.org/)
+[NCBI Gene](https://www.ncbi.nlm.nih.gov/gene/)
+[Saccharomyces Genome Database](http://sgd-archive.yeastgenome.org/)
+[FLJ Human cDNA Database](https://flj.lifesciencedb.jp/top/sys_info/02_about_database/accession_no/download_v032.html)
+[OMIM](https://omim.org/downloads/)
+[Uniprot](https://www.uniprot.org/)
+[Mouse Genome Informatics](https://www.informatics.jax.org/)
 <!-- /description -->
 
 ---
