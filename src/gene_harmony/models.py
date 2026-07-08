@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class ServiceEnvironment(str, Enum):
+class ServiceEnvironment(StrEnum):
     DEV = "dev"
     PROD = "prod"
     TEST = "test"

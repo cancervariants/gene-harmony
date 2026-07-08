@@ -1,6 +1,26 @@
+"""Utilities for resolving gene symbols across multiple harmonized reference datasets."""
+
 import pandas as pd
 
 class GeneHarmony:
+    """Resolve gene symbols across multiple harmonized gene reference datasets.
+
+    :param primary_df: DataFrame containing primary gene symbols. Must include
+        ``gene_symbol`` and ``primary_gene_symbol``.
+    :param ortholog_df: DataFrame containing ortholog symbols.
+    :param flj_clone_df: DataFrame containing FLJ clone symbols.
+    :param disease_df: DataFrame containing disease-related prefix symbols.
+    :param hgnc_gene_group_df: DataFrame containing HGNC gene group symbols.
+    :param gene_id_df: DataFrame containing gene identifier symbols.
+    :param mgi_withdrawn_df: DataFrame containing withdrawn MGI symbols.
+    :param ncbi_gene_group_df: DataFrame containing NCBI gene group symbols.
+    :param ncbi_gene_interaction_df: DataFrame containing NCBI gene interaction symbols.
+    :param ncbi_gene_neighbor_df: DataFrame containing NCBI gene neighbor symbols.
+    :param placeholder_df: DataFrame containing placeholder symbols.
+    :param previous_df: DataFrame containing previous gene symbols.
+    :param protein_mass_df: DataFrame containing protein mass symbols.
+    """
+
     def __init__(
         self,
         *,
