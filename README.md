@@ -6,7 +6,7 @@
 [![Actions status](https://github.com/cancervariants/gene-jar/actions/workflows/checks.yaml/badge.svg)](https://github.com/cancervariants/gene-jar/actions/checks.yaml)
 
 <!-- description -->
-This resource is useful for harmonizing ambiguous gene symbols powered by thousands of annotations characterizing the relationships between genes and their symbols.
+This resource is useful for resolving ambiguous gene symbols powered by thousands of annotations characterizing the relationships between genes and their symbols.
 
 Given a gene symbol, this package:
 - finds all genes with this symbol as an alias or primary gene symbol

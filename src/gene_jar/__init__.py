@@ -1,6 +1,6 @@
 """Gene Harmony: a tool for harmonizing ambiguous gene symbols."""
 
-from gene_harmony.resolver import GeneJar
+from gene_jar.resolver import GeneJar
 
 from importlib.metadata import version as _version
 

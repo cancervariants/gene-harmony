@@ -4,7 +4,7 @@ from functools import cache
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-from gene_harmony.models import ServiceEnvironment
+from gene_jar.models import ServiceEnvironment
 
 
 class Settings(BaseSettings):

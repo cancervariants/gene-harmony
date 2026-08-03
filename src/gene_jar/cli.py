@@ -4,9 +4,9 @@ import logging
 
 import click
 
-from gene_harmony import __version__
-from gene_harmony.config import get_config
-from gene_harmony.utils import initialize_logs
+from gene_jar import __version__
+from gene_jar.config import get_config
+from gene_jar.utils import initialize_logs
 
 @click.group()
 @click.version_option(__version__)
