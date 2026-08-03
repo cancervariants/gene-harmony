@@ -1,9 +1,9 @@
-# gene-harmony
+# gene-jar
 
-[![image](https://img.shields.io/pypi/v/gene-harmony.svg)](https://pypi.python.org/pypi/gene-harmony)
-[![image](https://img.shields.io/pypi/l/gene-harmony.svg)](https://pypi.python.org/pypi/gene-harmony)
-[![image](https://img.shields.io/pypi/pyversions/gene-harmony.svg)](https://pypi.python.org/pypi/gene-harmony)
-[![Actions status](https://github.com/cancervariants/gene-harmony/actions/workflows/checks.yaml/badge.svg)](https://github.com/cancervariants/gene-harmony/actions/checks.yaml)
+[![image](https://img.shields.io/pypi/v/gene-jar.svg)](https://pypi.python.org/pypi/gene-jar)
+[![image](https://img.shields.io/pypi/l/gene-jar.svg)](https://pypi.python.org/pypi/gene-jar)
+[![image](https://img.shields.io/pypi/pyversions/gene-jar.svg)](https://pypi.python.org/pypi/gene-jar)
+[![Actions status](https://github.com/cancervariants/gene-jar/actions/workflows/checks.yaml/badge.svg)](https://github.com/cancervariants/gene-jar/actions/checks.yaml)
 
 <!-- description -->
 This resource is useful for harmonizing ambiguous gene symbols powered by thousands of annotations characterizing the relationships between genes and their symbols.
@@ -26,20 +26,20 @@ Resources used for annotations include:
 
 ---
 
-**[Documentation](https://gene-harmony.readthedocs.io/stable/)** · [Installation](https://gene-harmony.readthedocs.io/stable/install.html) · [Usage](https://gene-harmony.readthedocs.io/stable/usage.html) · [API reference](https://gene-harmony.readthedocs.io/stable/reference/index.html)
+**[Documentation](https://gene-jar.readthedocs.io/stable/)** · [Installation](https://gene-jar.readthedocs.io/stable/install.html) · [Usage](https://gene-jar.readthedocs.io/stable/usage.html) · [API reference](https://gene-jar.readthedocs.io/stable/reference/index.html)
 
 ---
 
 ## Installation
 
-Install from [PyPI](https://pypi.org/project/gene-harmony/):
+Install from [PyPI](https://pypi.org/project/gene-jar/):
 
 ```shell
-python3 -m pip install gene-harmony
+python3 -m pip install gene-jar
 ```
 
 ---
 
 ## Feedback and contributing
 
-We welcome bug reports, feature requests, and code contributions from users and interested collaborators. The [documentation](https://gene-harmony.readthedocs.io/latest/contributing.html) contains guidance for submitting feedback and contributing new code.
+We welcome bug reports, feature requests, and code contributions from users and interested collaborators. The [documentation](https://gene-jar.readthedocs.io/latest/contributing.html) contains guidance for submitting feedback and contributing new code.

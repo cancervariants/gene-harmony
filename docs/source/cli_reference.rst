@@ -4,5 +4,5 @@ Command-line interface
 ----------------------
 
 .. click:: gene_harmony.cli:cli
-   :prog: gene-harmony
+   :prog: gene-jar
    :nested: full

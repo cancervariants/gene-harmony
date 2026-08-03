@@ -2,7 +2,7 @@
 
 import pandas as pd
 
-class GeneHarmony:
+class GeneJar:
     """Resolve gene symbols across multiple harmonized gene reference datasets.
 
     :param primary_df: DataFrame containing primary gene symbols. Must include

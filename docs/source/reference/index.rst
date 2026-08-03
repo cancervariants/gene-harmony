@@ -11,4 +11,4 @@ Core Modules
    :toctree: api/
    :template: module_summary.rst
 
-   gene-harmony
+   gene-jar

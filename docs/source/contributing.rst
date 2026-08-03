@@ -6,15 +6,15 @@ Contributing
 Bug reports and feature requests
 --------------------------------
 
-Bugs and new feature requests can be submitted to the `issue tracker on GitHub <https://github.com/cancervariants/gene-harmony/issues>`_. See `this StackOverflow post <https://stackoverflow.com/help/minimal-reproducible-example>`_ for tips on how to craft a helpful bug report.
+Bugs and new feature requests can be submitted to the `issue tracker on GitHub <https://github.com/cancervariants/gene-jar/issues>`_. See `this StackOverflow post <https://stackoverflow.com/help/minimal-reproducible-example>`_ for tips on how to craft a helpful bug report.
 
 Development setup
 -----------------
 
 Clone the repository: ::
 
-    git clone https://github.com/cancervariants/gene-harmony
-    cd gene-harmony
+    git clone https://github.com/cancervariants/gene-jar
+    cd gene-jar
 
 Then initialize a virtual environment: ::
 
@@ -22,7 +22,7 @@ Then initialize a virtual environment: ::
     source venv/bin/activate
     python3 -m pip install -e '.[dev,tests,docs]'
 
-Note that the project is installed as ``gene-harmony``, but imported in Python as
+Note that the project is installed as ``gene-jar``, but imported in Python as
 ``gene_harmony``.
 
 We use `prek <https://prek.j178.dev/>`_ to run conformance tests before commits. This provides checks for:

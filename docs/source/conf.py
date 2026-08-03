@@ -6,10 +6,10 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = "gene-harmony"
+project = "gene-jar"
 copyright = "2026, Wagner Lab"
 author = "Wagner Lab"
-html_title = "gene-harmony"
+html_title = "gene-jar"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -40,7 +40,7 @@ html_theme_options = {
     "footer_icons": [
         {
             "name": "GitHub",
-            "url": "https://github.com/cancervariants/gene-harmony",
+            "url": "https://github.com/cancervariants/gene-jar",
             "html": "",
             "class": "fa-brands fa-solid fa-github",
         },
@@ -71,7 +71,7 @@ def linkcode_resolve(domain, info):
     if not info["module"]:
         return None
     filename = info["module"].replace(".", "/")
-    return f"https://github.com/cancervariants/gene-harmony/blob/main/src/{filename}.py"
+    return f"https://github.com/cancervariants/gene-jar/blob/main/src/{filename}.py"
 
 
 # -- code block style --------------------------------------------------------

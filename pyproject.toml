@@ -1,5 +1,5 @@
 [project]
-name = "gene-harmony"
+name = "gene-jar"
 authors = [
     {name = "Anastasia Bratulin", email = "anastasia.bratulin@nationwidechildrens.org"},
 ]
@@ -45,14 +45,14 @@ docs = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/cancervariants/gene-harmony"
-Documentation = "https://github.com/cancervariants/gene-harmony"
-Changelog = "https://github.com/cancervariants/gene-harmony/releases"
-Source = "https://github.com/cancervariants/gene-harmony"
-"Bug Tracker" = "https://github.com/cancervariants/gene-harmony/issues"
+Homepage = "https://github.com/cancervariants/gene-jar"
+Documentation = "https://github.com/cancervariants/gene-jar"
+Changelog = "https://github.com/cancervariants/gene-jar/releases"
+Source = "https://github.com/cancervariants/gene-jar"
+"Bug Tracker" = "https://github.com/cancervariants/gene-jar/issues"
 
 [project.scripts]
-gene-harmony = "gene_harmony.cli:cli"
+gene-jar = "gene_harmony.cli:cli"
 
 [build-system]
 requires = ["setuptools>=77.0", "setuptools_scm>=8", "setuptools>=42", "wheel"]

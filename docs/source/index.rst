@@ -1,20 +1,20 @@
-gene-harmony |version|
+gene-jar |version|
 =========================
 
-.. image:: https://img.shields.io/pypi/v/gene-harmony.svg
+.. image:: https://img.shields.io/pypi/v/gene-jar.svg
    :alt: PyPI version
-   :target: https://pypi.python.org/pypi/gene-harmony
+   :target: https://pypi.python.org/pypi/gene-jar
 
-.. image:: https://img.shields.io/pypi/l/gene-harmony.svg
+.. image:: https://img.shields.io/pypi/l/gene-jar.svg
    :alt: License
-   :target: https://github.com/cancervariants/gene-harmony/blob/main/LICENSE
+   :target: https://github.com/cancervariants/gene-jar/blob/main/LICENSE
 
-.. image:: https://img.shields.io/pypi/pyversions/gene-harmony?color=gr
+.. image:: https://img.shields.io/pypi/pyversions/gene-jar?color=gr
    :alt: PyPI - supported Python versions
 
-.. image:: https://github.com/cancervariants/gene-harmony/actions/workflows/checks.yaml/badge.svg
+.. image:: https://github.com/cancervariants/gene-jar/actions/workflows/checks.yaml/badge.svg
    :alt: tests status
-   :target: https://github.com/cancervariants/gene-harmony/actions/workflows/checks.yaml
+   :target: https://github.com/cancervariants/gene-jar/actions/workflows/checks.yaml
 
 Resource for harmonizing ambiguous gene symbols
 
@@ -23,7 +23,7 @@ Quick start
 Install from PyPI:
 .. code-block:: bash
 
-   pip install gene-harmony
+   pip install gene-jar
 
 .. code-block:: python
 
