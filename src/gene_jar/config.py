@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     """
 
     model_config = SettingsConfigDict(
-        env_prefix="GENE_HARMONY_",
+        env_prefix="GENE_JAR_",
         env_file=".env",
         env_file_encoding="utf-8",
         extra="ignore"

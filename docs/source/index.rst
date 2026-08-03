@@ -27,7 +27,7 @@ Install from PyPI:
 
 .. code-block:: python
 
-   import gene_harmony
+   import gene_jar
 
 .. toctree::
    :hidden:

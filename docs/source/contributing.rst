@@ -23,7 +23,7 @@ Then initialize a virtual environment: ::
     python3 -m pip install -e '.[dev,tests,docs]'
 
 Note that the project is installed as ``gene-jar``, but imported in Python as
-``gene_harmony``.
+``gene_jar``.
 
 We use `prek <https://prek.j178.dev/>`_ to run conformance tests before commits. This provides checks for:
 

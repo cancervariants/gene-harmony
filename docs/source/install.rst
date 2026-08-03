@@ -12,4 +12,4 @@ Import the package in Python as:
 
 .. code-block:: python
 
-   import gene_harmony
+   import gene_jar

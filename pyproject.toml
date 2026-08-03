@@ -52,7 +52,7 @@ Source = "https://github.com/cancervariants/gene-jar"
 "Bug Tracker" = "https://github.com/cancervariants/gene-jar/issues"
 
 [project.scripts]
-gene-jar = "gene_harmony.cli:cli"
+gene-jar = "gene_jar.cli:cli"
 
 [build-system]
 requires = ["setuptools>=77.0", "setuptools_scm>=8", "setuptools>=42", "wheel"]

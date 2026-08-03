@@ -1,4 +1,4 @@
-"""Gene Harmony: a tool for harmonizing ambiguous gene symbols."""
+"""Gene JAR: a tool for harmonizing ambiguous gene symbols."""
 
 from gene_jar.resolver import GeneJar
 

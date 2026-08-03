@@ -3,6 +3,6 @@
 Command-line interface
 ----------------------
 
-.. click:: gene_harmony.cli:cli
+.. click:: gene_jar.cli:cli
    :prog: gene-jar
    :nested: full
