@@ -73,27 +73,32 @@ class GeneJar:
         for key in self.dfs:
             self.column_map.setdefault(key, default_cols)
 
+    def symbol_categories(self) -> list[str]:
+        """Return the valid category names accepted by resolve()."""
+
+        return sorted(self.dfs)
+
     def resolve(
         self,
         symbol: str,
-        source: str = "Primary",
+        symbol_category: str = "Primary",
         match_type: MatchType = MatchType.IDENTICAL,
     ):
         """
-        Resolve a gene symbol from a specific source.
+        Resolve a gene symbol from a specific symbol category.
 
         :param symbol: Gene symbol to search for.
-        :param source: Source dataframe key.
+        :param symbol_category: Source dataframe key.
         :param match_type: Type of matching to perform.
         :return: Filtered DataFrame.
         """
-        if source not in self.dfs:
+        if symbol_category not in self.dfs:
             raise ValueError(
-                f"Unknown source '{source}'. Available: {sorted(self.dfs)}"
+                f"Unknown symbol category '{symbol_category}'. Available: {sorted(self.dfs)}"
             )
 
-        df = self.dfs[source]
-        col_main, col_primary = self.column_map[source]
+        df = self.dfs[symbol_category]
+        col_main, col_primary = self.column_map[symbol_category]
         target = symbol.upper()
 
         if match_type is MatchType.IDENTICAL:
