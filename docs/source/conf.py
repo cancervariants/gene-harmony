@@ -62,7 +62,7 @@ autodoc_preserve_defaults = True
 # -- get version -------------------------------------------------------------
 from importlib.metadata import version
 
-__version__ = version("gene-harmony") # noqa: E402
+__version__ = version("gene-jar") # noqa: E402
 
 version = release = __version__
 
