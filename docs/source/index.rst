@@ -1,20 +1,20 @@
-gene-jar |version|
+gene_jar |version|
 =========================
 
-.. image:: https://img.shields.io/pypi/v/gene-jar.svg
+.. image:: https://img.shields.io/pypi/v/gene_jar.svg
    :alt: PyPI version
-   :target: https://pypi.python.org/pypi/gene-jar
+   :target: https://pypi.python.org/pypi/gene_jar
 
-.. image:: https://img.shields.io/pypi/l/gene-jar.svg
+.. image:: https://img.shields.io/pypi/l/gene_jar.svg
    :alt: License
-   :target: https://github.com/cancervariants/gene-jar/blob/main/LICENSE
+   :target: https://github.com/cancervariants/gene_jar/blob/main/LICENSE
 
-.. image:: https://img.shields.io/pypi/pyversions/gene-jar?color=gr
+.. image:: https://img.shields.io/pypi/pyversions/gene_jar?color=gr
    :alt: PyPI - supported Python versions
 
-.. image:: https://github.com/cancervariants/gene-jar/actions/workflows/checks.yaml/badge.svg
+.. image:: https://github.com/cancervariants/gene_jar/actions/workflows/checks.yaml/badge.svg
    :alt: tests status
-   :target: https://github.com/cancervariants/gene-jar/actions/workflows/checks.yaml
+   :target: https://github.com/cancervariants/gene_jar/actions/workflows/checks.yaml
 
 Resource for harmonizing ambiguous gene symbols
 
@@ -23,7 +23,7 @@ Quick start
 Install from PyPI:
 .. code-block:: bash
 
-   pip install gene-jar
+   pip install gene_jar
 
 .. code-block:: python
 
@@ -36,7 +36,6 @@ Install from PyPI:
     Installation<install>
     Usage<usage>
     API Reference<reference/index>
-    CLI Reference<cli>
     Changelog<changelog>
     Contributing<contributing>
     License<license>
