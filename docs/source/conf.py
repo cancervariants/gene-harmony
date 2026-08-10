@@ -60,7 +60,9 @@ sys.path.insert(0, os.path.abspath("../../"))
 autodoc_preserve_defaults = True
 
 # -- get version -------------------------------------------------------------
-from gene_jar import __version__  # noqa: E402
+from importlib.metadata import version
+
+__version__ = version("gene-harmony") # noqa: E402
 
 version = release = __version__
 
