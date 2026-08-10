@@ -1,6 +1,14 @@
 """Utilities for resolving gene symbols across multiple harmonized reference datasets."""
 
 import pandas as pd
+from enum import StrEnum
+
+
+class MatchType(StrEnum):
+    """Match options"""
+
+    IDENTICAL = "identical"
+    PARTIAL = "partial"
 
 class GeneJar:
     """Resolve gene symbols across multiple harmonized gene reference datasets.
@@ -65,33 +73,38 @@ class GeneJar:
         for key in self.dfs:
             self.column_map.setdefault(key, default_cols)
 
-    def resolve(self, symbol: str, source: str = "Primary", match_type: str = "identical") -> pd.DataFrame:
+    def resolve(
+        self,
+        symbol: str,
+        source: str = "Primary",
+        match_type: MatchType = MatchType.IDENTICAL,
+    ):
         """
         Resolve a gene symbol from a specific source.
 
         :param symbol: Gene symbol to search for.
         :param source: Source dataframe key.
-        :param match_type: "identical" for exact matches, "partial" for substring matches.
+        :param match_type: Type of matching to perform.
         :return: Filtered DataFrame.
         """
         if source not in self.dfs:
-            raise ValueError(f"Unknown source '{source}'. Available: {sorted(self.dfs)}")
-        
+            raise ValueError(
+                f"Unknown source '{source}'. Available: {sorted(self.dfs)}"
+            )
+
         df = self.dfs[source]
         col_main, col_primary = self.column_map[source]
         target = symbol.upper()
-        
-        if match_type == "identical":
+
+        if match_type is MatchType.IDENTICAL:
             mask = (
                 df[col_main].astype(str).str.upper().eq(target)
                 | df[col_primary].astype(str).str.upper().eq(target)
             )
-        elif match_type == "partial":
+        elif match_type is MatchType.PARTIAL:
             mask = (
                 df[col_main].astype(str).str.upper().str.contains(target, na=False)
                 | df[col_primary].astype(str).str.upper().str.contains(target, na=False)
             )
-        else:
-            raise ValueError("match_type must be 'identical' or 'partial'")
-        
+
         return df.loc[mask].copy()
