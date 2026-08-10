@@ -18,7 +18,7 @@ class Settings(BaseSettings):
         env_prefix="GENE_JAR_",
         env_file=".env",
         env_file_encoding="utf-8",
-        extra="ignore"
+        extra="ignore",
     )
 
     env: ServiceEnvironment = ServiceEnvironment.DEV

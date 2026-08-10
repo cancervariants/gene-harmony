@@ -19,6 +19,7 @@ description = "Resource for harmonizing ambiguous gene symbols"
 license = "MIT"
 license-files = ["LICENSE"]
 dependencies = [
+    "tables",
     "pandas",
     "click",
     "pydantic-settings",

@@ -1,7 +1,8 @@
 """Utilities for resolving gene symbols across multiple harmonized reference datasets."""
 
-import pandas as pd
 from enum import StrEnum
+
+import pandas as pd
 
 
 class MatchType(StrEnum):
@@ -9,6 +10,7 @@ class MatchType(StrEnum):
 
     IDENTICAL = "identical"
     PARTIAL = "partial"
+
 
 class GeneJar:
     """Resolve gene symbols across multiple harmonized gene reference datasets.
@@ -45,25 +47,24 @@ class GeneJar:
         placeholder_df: pd.DataFrame,
         previous_df: pd.DataFrame,
         protein_mass_df: pd.DataFrame,
-    ):        
-        """
-        Initialize with dataframes.
+    ):
+        """Initialize with dataframes.
         primary_df and ortholog_df must have columns: 'gene_symbol', 'primary_gene_symbol'
         """
         self.dfs = {
             "Primary": primary_df,
             "Ortholog Symbol": ortholog_df,
-            "Clone Symbol":flj_clone_df, 
-            "Prefix Condition Symbol":disease_df, 
-            "Prefix Gene Group Symbol":hgnc_gene_group_df, 
-            "Gene Identifier Symbol":gene_id_df,
-            "Withdrawn MGI Symbol":mgi_withdrawn_df, 
-            "Gene Group Symbol":ncbi_gene_group_df, 
-            "Gene Interaction Symbol":ncbi_gene_interaction_df, 
-            "Gene Neighbor Symbol":ncbi_gene_neighbor_df, 
-            "Placeholder Symbol":placeholder_df, 
-            "Previous Symbol":previous_df, 
-            "Protein Mass Symbol":protein_mass_df
+            "Clone Symbol": flj_clone_df,
+            "Prefix Condition Symbol": disease_df,
+            "Prefix Gene Group Symbol": hgnc_gene_group_df,
+            "Gene Identifier Symbol": gene_id_df,
+            "Withdrawn MGI Symbol": mgi_withdrawn_df,
+            "Gene Group Symbol": ncbi_gene_group_df,
+            "Gene Interaction Symbol": ncbi_gene_interaction_df,
+            "Gene Neighbor Symbol": ncbi_gene_neighbor_df,
+            "Placeholder Symbol": placeholder_df,
+            "Previous Symbol": previous_df,
+            "Protein Mass Symbol": protein_mass_df,
         }
         default_cols = ("alias_symbol", "primary_gene_symbol")
         self.column_map = {
@@ -75,7 +76,6 @@ class GeneJar:
 
     def symbol_categories(self) -> list[str]:
         """Return the valid category names accepted by resolve()."""
-
         return sorted(self.dfs)
 
     def resolve(
@@ -83,9 +83,8 @@ class GeneJar:
         symbol: str,
         symbol_category: str = "Primary",
         match_type: MatchType = MatchType.IDENTICAL,
-    ):
-        """
-        Resolve a gene symbol from a specific symbol category.
+    ) -> pd.DataFrame:
+        """Resolve a gene symbol from a specific symbol category.
 
         :param symbol: Gene symbol to search for.
         :param symbol_category: Source dataframe key.
@@ -93,23 +92,23 @@ class GeneJar:
         :return: Filtered DataFrame.
         """
         if symbol_category not in self.dfs:
-            raise ValueError(
-                f"Unknown symbol category '{symbol_category}'. Available: {sorted(self.dfs)}"
+            message = (
+                f"Unknown symbol category '{symbol_category}'. "
+                f"Available: {sorted(self.dfs)}"
             )
+            raise ValueError(message)
 
         df = self.dfs[symbol_category]
         col_main, col_primary = self.column_map[symbol_category]
         target = symbol.upper()
 
         if match_type is MatchType.IDENTICAL:
-            mask = (
-                df[col_main].astype(str).str.upper().eq(target)
-                | df[col_primary].astype(str).str.upper().eq(target)
-            )
+            mask = df[col_main].astype(str).str.upper().eq(target) | df[
+                col_primary
+            ].astype(str).str.upper().eq(target)
         elif match_type is MatchType.PARTIAL:
-            mask = (
-                df[col_main].astype(str).str.upper().str.contains(target, na=False)
-                | df[col_primary].astype(str).str.upper().str.contains(target, na=False)
-            )
+            mask = df[col_main].astype(str).str.upper().str.contains(
+                target, na=False
+            ) | df[col_primary].astype(str).str.upper().str.contains(target, na=False)
 
         return df.loc[mask].copy()
