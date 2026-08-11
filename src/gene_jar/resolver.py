@@ -1,6 +1,8 @@
 """Utilities for resolving gene symbols across multiple harmonized reference datasets."""
 
 from enum import StrEnum
+from dataclasses import dataclass
+from typing import Any
 
 import pandas as pd
 
@@ -10,6 +12,17 @@ class MatchType(StrEnum):
 
     IDENTICAL = "identical"
     PARTIAL = "partial"
+
+@dataclass
+class AmbiguityResult:
+    """Result of a gene symbol ambiguity check."""
+
+    ambiguous: bool
+    primary_gene_symbol: list[str]
+    hgnc_id: list[Any]
+    ncbi_id: list[Any]
+    ensg_id: list[Any]
+
 
 
 class GeneJar:
@@ -74,6 +87,7 @@ class GeneJar:
         for key in self.dfs:
             self.column_map.setdefault(key, default_cols)
 
+
     def symbol_categories(self) -> list[str]:
         """Return the valid category names accepted by resolve()."""
         return sorted(self.dfs)
@@ -112,3 +126,33 @@ class GeneJar:
             ) | df[col_primary].astype(str).str.upper().str.contains(target, na=False)
 
         return df.loc[mask].copy()
+    def _flatten_unique(self, values: pd.Series) -> list[Any]:
+        """Flatten nested identifier values and return unique non-null entries."""
+        flattened = []
+
+        for value in values.dropna():
+            if isinstance(value, (set, list, tuple)):
+                flattened.extend(value)
+            else:
+                flattened.append(value)
+
+        return list(dict.fromkeys(flattened))
+
+    def ambiguity_check(self, symbol: str) -> AmbiguityResult:
+        """Check whether a symbol is associated with multiple primary genes."""
+        result = self.resolve(
+            symbol=symbol,
+            match_type=MatchType.IDENTICAL,
+        )
+
+        primary_symbols = self._flatten_unique(
+            result["primary_gene_symbol"]
+        )
+
+        return AmbiguityResult(
+            ambiguous=len(primary_symbols) > 1,
+            primary_gene_symbol=primary_symbols,
+            hgnc_id=self._flatten_unique(result["HGNC_ID"]),
+            ncbi_id=self._flatten_unique(result["NCBI_ID"]),
+            ensg_id=self._flatten_unique(result["ENSG_ID"]),
+        )
