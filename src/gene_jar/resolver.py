@@ -1,7 +1,7 @@
 """Utilities for resolving gene symbols across multiple harmonized reference datasets."""
 
-from enum import StrEnum
 from dataclasses import dataclass
+from enum import StrEnum
 from typing import Any
 
 import pandas as pd
@@ -13,6 +13,7 @@ class MatchType(StrEnum):
     IDENTICAL = "identical"
     PARTIAL = "partial"
 
+
 @dataclass
 class AmbiguityResult:
     """Result of a gene symbol ambiguity check."""
@@ -22,7 +23,6 @@ class AmbiguityResult:
     hgnc_id: list[Any]
     ncbi_id: list[Any]
     ensg_id: list[Any]
-
 
 
 class GeneJar:
@@ -87,7 +87,6 @@ class GeneJar:
         for key in self.dfs:
             self.column_map.setdefault(key, default_cols)
 
-
     def symbol_categories(self) -> list[str]:
         """Return the valid category names accepted by resolve()."""
         return sorted(self.dfs)
@@ -126,6 +125,7 @@ class GeneJar:
             ) | df[col_primary].astype(str).str.upper().str.contains(target, na=False)
 
         return df.loc[mask].copy()
+
     def _flatten_unique(self, values: pd.Series) -> list[Any]:
         """Flatten nested identifier values and return unique non-null entries."""
         flattened = []
@@ -145,9 +145,7 @@ class GeneJar:
             match_type=MatchType.IDENTICAL,
         )
 
-        primary_symbols = self._flatten_unique(
-            result["primary_gene_symbol"]
-        )
+        primary_symbols = self._flatten_unique(result["primary_gene_symbol"])
 
         return AmbiguityResult(
             ambiguous=len(primary_symbols) > 1,
