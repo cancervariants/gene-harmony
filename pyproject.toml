@@ -22,7 +22,6 @@ dependencies = [
     "tables",
     "pandas",
     "click",
-    "pydantic-settings",
 ]
 dynamic = ["version"]
 
@@ -153,3 +152,9 @@ mypy-init-return = true
 
 [tool.ruff.format]
 docstring-code-format = true
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "pytest-cov>=7.1.0",
+]
