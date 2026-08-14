@@ -15,14 +15,21 @@ class MatchType(StrEnum):
 
 
 @dataclass
+class GeneMatch:
+    """A single resolved gene and its associated identifiers."""
+
+    primary_gene_symbol: str
+    hgnc_id: Any
+    ncbi_id: Any
+    ensg_id: Any
+
+
+@dataclass
 class AmbiguityResult:
     """Result of a gene symbol ambiguity check."""
 
-    ambiguous: bool
-    primary_gene_symbol: list[str]
-    hgnc_id: list[Any]
-    ncbi_id: list[Any]
-    ensg_id: list[Any]
+    is_ambiguous: bool
+    gene_matches: list[GeneMatch]
 
 
 class GeneJar:
@@ -140,17 +147,27 @@ class GeneJar:
 
     def ambiguity_check(self, symbol: str) -> AmbiguityResult:
         """Check whether a symbol is associated with multiple primary genes."""
-        result = self.resolve(
+        gene_match = self.resolve(
             symbol=symbol,
             match_type=MatchType.IDENTICAL,
         )
 
-        primary_symbols = self._flatten_unique(result["primary_gene_symbol"])
+        gene_matches = [
+            GeneMatch(
+                primary_gene_symbol=row["primary_gene_symbol"],
+                hgnc_id=row["HGNC_ID"],
+                ncbi_id=row["NCBI_ID"],
+                ensg_id=row["ENSG_ID"],
+            )
+            for _, row in gene_match.iterrows()
+        ]
+
+        primary_symbols = {
+            gene.primary_gene_symbol
+            for gene in gene_matches
+        }
 
         return AmbiguityResult(
-            ambiguous=len(primary_symbols) > 1,
-            primary_gene_symbol=primary_symbols,
-            hgnc_id=self._flatten_unique(result["HGNC_ID"]),
-            ncbi_id=self._flatten_unique(result["NCBI_ID"]),
-            ensg_id=self._flatten_unique(result["ENSG_ID"]),
+            is_ambiguous=len(primary_symbols) > 1,
+            gene_matches=gene_matches,
         )
