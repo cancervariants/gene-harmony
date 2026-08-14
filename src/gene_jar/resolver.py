@@ -162,10 +162,7 @@ class GeneJar:
             for _, row in gene_match.iterrows()
         ]
 
-        primary_symbols = {
-            gene.primary_gene_symbol
-            for gene in gene_matches
-        }
+        primary_symbols = {gene.primary_gene_symbol for gene in gene_matches}
 
         return AmbiguityResult(
             is_ambiguous=len(primary_symbols) > 1,
