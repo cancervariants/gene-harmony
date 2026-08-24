@@ -48,7 +48,6 @@ Homepage = "https://github.com/cancervariants/gene-jar"
 Documentation = "https://github.com/cancervariants/gene-jar"
 Changelog = "https://github.com/cancervariants/gene-jar/releases"
 Source = "https://github.com/cancervariants/gene-jar"
-"Bug Tracker" = "https://github.com/cancervariants/gene-jar/issues"
 
 [project.scripts]
 
