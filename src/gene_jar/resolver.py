@@ -19,9 +19,9 @@ class GeneMatch:
     """A single resolved gene and its associated identifiers."""
 
     primary_gene_symbol: str
-    hgnc_id: Any
-    ncbi_id: Any
-    ensg_id: Any
+    hgnc_id: set[str]
+    ncbi_id: set[str]
+    ensg_id: set[str]
 
 
 @dataclass
