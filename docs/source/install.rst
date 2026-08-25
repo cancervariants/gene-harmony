@@ -2,14 +2,14 @@
 
 Installation
 ============
-Install from `PyPI <https://pypi.org/project/gene-harmony/>`_:
+Install from `PyPI <https://pypi.org/project/gene-jar/>`_:
 
 .. code-block:: bash
 
-   pip install gene-harmony
+   pip install gene-jar
 
 Import the package in Python as:
 
 .. code-block:: python
 
-   import gene_harmony
+   import gene_jar

@@ -1,5 +1,5 @@
 [project]
-name = "gene-harmony"
+name = "gene-jar"
 authors = [
     {name = "Anastasia Bratulin", email = "anastasia.bratulin@nationwidechildrens.org"},
 ]
@@ -19,8 +19,8 @@ description = "Resource for harmonizing ambiguous gene symbols"
 license = "MIT"
 license-files = ["LICENSE"]
 dependencies = [
-    "click",
-    "pydantic-settings",
+    "tables",
+    "pandas",
 ]
 dynamic = ["version"]
 
@@ -41,18 +41,14 @@ docs = [
     "sphinxext-opengraph==0.8.2",
     "furo==2023.3.27",
     "sphinx-github-changelog==1.2.1",
-    "sphinx-click==5.0.1",
 ]
 
 [project.urls]
-Homepage = "https://github.com/cancervariants/gene-harmony"
-Documentation = "https://github.com/cancervariants/gene-harmony"
-Changelog = "https://github.com/cancervariants/gene-harmony/releases"
-Source = "https://github.com/cancervariants/gene-harmony"
-"Bug Tracker" = "https://github.com/cancervariants/gene-harmony/issues"
-
-[project.scripts]
-gene-harmony = "gene_harmony.cli:cli"
+Homepage = "https://github.com/cancervariants/gene-jar"
+Documentation = "https://github.com/cancervariants/gene-jar"
+Changelog = "https://github.com/cancervariants/gene-jar/releases"
+Source = "https://github.com/cancervariants/gene-jar"
+"Bug Tracker" = "https://github.com/cancervariants/gene-jar/issues"
 
 [build-system]
 requires = ["setuptools>=77.0", "setuptools_scm>=8", "setuptools>=42", "wheel"]
@@ -151,3 +147,9 @@ mypy-init-return = true
 
 [tool.ruff.format]
 docstring-code-format = true
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "pytest-cov>=7.1.0",
+]
