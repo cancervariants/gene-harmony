@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass
 from enum import StrEnum
-from typing import Any
+from typing import Any, ClassVar
 
 import pandas as pd
 
@@ -52,7 +52,7 @@ class GeneJar:
     :param alternate_abbreviation_df: DataFrame containing alternate abbreviation symbols
     """
 
-    RANK_ORDER = [
+    RANK_ORDER: ClassVar[list[str]] = [
         "Primary Gene Symbol",
         "Previous Symbol",
         "Clone Name Symbol",
@@ -91,7 +91,7 @@ class GeneJar:
         primary_df and ortholog_df must have columns: 'gene_symbol', 'primary_gene_symbol'
         """
         self.dfs = {
-            "Primary": primary_df,
+            "Primary Gene Symbol": primary_df,
             "Ortholog Symbol": ortholog_df,
             "Clone Name Symbol": flj_clone_df,
             "Phenotype Symbol": phenotype_df,
@@ -106,17 +106,27 @@ class GeneJar:
             "Protein Mass Symbol": protein_mass_df,
             "Alternate Abbreviation Symbol": alternate_abbreviation_df,
         }
-        default_cols = ("alias_symbol", "primary_gene_symbol")
+
         self.column_map = {
-            "Primary Gene Symbol": ("gene_symbol", "primary_gene_symbol"),
+            "Primary Gene Symbol": ("primary_gene_symbol"),
+        }
+
+        self.qualifier_map = {
+            "Ortholog Symbol": "Matching Species",
+            "Phenotype Symbol": "Matching Phenotype Symbol",
+            "Gene Group Symbol": "Matching Abbreviation",
+            "Gene Identifier Symbol": "Identifier Match Source",
+            "Related Gene Symbol": "Relationship",
+            "Gene Neighbor Symbol": "neighbor_gene_type",
+            "Placeholder Symbol": "Placeholder Symbol Match Type",
+            "Previous Symbol": "Previous Symbol Source",
         }
 
         for category in self.dfs:
-            self.column_map.setdefault(category, default_cols)
+            self.column_map.setdefault(category, "alias_symbol")
 
         self.rank_map = {
-            category: rank
-            for rank, category in enumerate(self.RANK_ORDER)
+            category: rank for rank, category in enumerate(self.RANK_ORDER)
         }
 
     def symbol_categories(self) -> list[str]:
@@ -142,9 +152,7 @@ class GeneJar:
         for value in group[column].dropna():
             if isinstance(value, (set, list, tuple)):
                 identifiers.update(
-                    str(identifier)
-                    for identifier in value
-                    if pd.notna(identifier)
+                    str(identifier) for identifier in value if pd.notna(identifier)
                 )
             else:
                 identifiers.add(str(value))
@@ -158,10 +166,12 @@ class GeneJar:
     ) -> pd.DataFrame:
         """Resolve a symbol and return ranked candidate genes.
 
-        Candidates are ranked using the highest-priority relationship category
-        associated with the queried symbol. When candidates have the same
-        highest-priority category, the candidate with more annotated relationship
-        categories is ranked first.
+        Each relationship DataFrame is searched independently. The relationship
+        category represented by the DataFrame is assigned to each matching
+        candidate gene. Candidates are ranked using their highest-priority matched
+        relationship category. When candidates share the same highest-priority
+        category, the candidate with more matched relationship categories is
+        ranked first.
 
         :param symbol: Gene symbol to resolve.
         :param match_type: Type of symbol matching to perform.
@@ -171,8 +181,11 @@ class GeneJar:
         target = symbol.casefold()
         matches = []
 
+        matches = []
+
         for category, df in self.dfs.items():
             symbol_column = self.column_map[category]
+
             normalized_symbols = df[symbol_column].astype("string").str.casefold()
 
             if match_type is MatchType.IDENTICAL:
@@ -189,8 +202,22 @@ class GeneJar:
             if category_matches.empty:
                 continue
 
+            # Record exactly why this row matched.
             category_matches["matched_category"] = category
-            category_matches["category_rank"] = self.rank_map[category]
+            category_matches["matched_symbol"] = category_matches[symbol_column]
+
+            qualifier_column = self.qualifier_map.get(category)
+
+            if qualifier_column is not None:
+                category_matches["qualifier"] = [
+                    {qualifier_column: value} if pd.notna(value) else {}
+                    for value in category_matches[qualifier_column]
+                ]
+            else:
+                category_matches["qualifier"] = [
+                    {} for _ in range(len(category_matches))
+                ]
+
             matches.append(category_matches)
 
         if not matches:
@@ -202,12 +229,16 @@ class GeneJar:
                     "NCBI_ID",
                     "ENSG_ID",
                     "best_category",
+                    "qualifier",
                     "matched_categories",
                     "relationship_count",
                 ]
             )
 
-        all_matches = pd.concat(matches, ignore_index=True)
+        all_matches = pd.concat(
+            matches,
+            ignore_index=True,
+        )
 
         candidates = []
 
@@ -217,9 +248,20 @@ class GeneJar:
             dropna=False,
         ):
             matched_categories = sorted(
-                set(group["matched_category"]),
-                key=self.rank_map.get,
+                group["matched_category"].dropna().unique(),
+                key=lambda category: self.rank_map[category],
             )
+
+            best_category = matched_categories[0]
+
+            best_category_rows = group[group["matched_category"] == best_category]
+
+            qualifier = {}
+
+            for value in best_category_rows["qualifier"]:
+                qualifier.update(value)
+
+            matched_symbols = set(group["matched_symbol"].dropna().astype(str))
 
             candidates.append(
                 {
@@ -227,10 +269,12 @@ class GeneJar:
                     "HGNC_ID": self._identifier_set(group, "HGNC_ID"),
                     "NCBI_ID": self._identifier_set(group, "NCBI_ID"),
                     "ENSG_ID": self._identifier_set(group, "ENSG_ID"),
-                    "best_category": matched_categories[0],
+                    "best_category": best_category,
+                    "qualifier": qualifier,
+                    "matched_symbol": matched_symbols,
                     "matched_categories": matched_categories,
                     "relationship_count": len(matched_categories),
-                    "_category_rank": self.rank_map[matched_categories[0]],
+                    "_category_rank": self.rank_map[best_category],
                 }
             )
 
@@ -242,11 +286,19 @@ class GeneJar:
                 "relationship_count",
                 "primary_gene_symbol",
             ],
-            ascending=[True, False, True],
+            ascending=[
+                True,
+                False,
+                True,
+            ],
             kind="stable",
         ).reset_index(drop=True)
 
-        result.insert(0, "candidate_rank", result.index + 1)
+        result.insert(
+            0,
+            "candidate_rank",
+            result.index + 1,
+        )
 
         return result.drop(columns="_category_rank")
 
