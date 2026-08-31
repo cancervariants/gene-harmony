@@ -5,8 +5,8 @@ import pandas as pd
 from gene_jar import GeneJar
 
 
-def test_resolve_finds_a1b_in_gene_symbol():
-    """Test that resolving A1BG returns a gene_symbol containing A1B."""
+def test_resolve_finds_a1bg_as_primary_gene_symbol():
+    """Test that resolving A1BG returns A1BG as the primary candidate."""
     primary_df = pd.DataFrame(
         {
             "gene_symbol": ["A1B", "TP53", "KRAS"],
@@ -40,4 +40,6 @@ def test_resolve_finds_a1b_in_gene_symbol():
 
     result = gj.resolve(symbol="A1BG")
 
-    assert "A1B" in result["gene_symbol"].values
+    assert result.iloc[0]["primary_gene_symbol"] == "A1BG"
+    assert result.iloc[0]["best_category"] == "Primary Gene Symbol"
+    assert result.iloc[0]["candidate_rank"] == 1
